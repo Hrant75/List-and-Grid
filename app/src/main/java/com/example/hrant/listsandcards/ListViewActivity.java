@@ -11,10 +11,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class ListViewActivity extends AppCompatActivity {
-
-//    String countryList[] = {"India", "China", "australia", "Portugle", "America", "NewZealand"};
-//    int flags[] = {R.drawable.flag_in, R.drawable.flag_cn, R.drawable.flag_au, R.drawable.flag_pl, R.drawable.flag_us, R.drawable.flag_nz};
-ListView simpleList;
     Countries countries;
     ArrayList<Country> countryList;
     private RecyclerView recyclerView;
@@ -26,6 +22,7 @@ ListView simpleList;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
+
         Intent intent = getIntent();
         String type = intent.getStringExtra("type");
         countries = new Countries(this);

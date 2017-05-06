@@ -61,8 +61,8 @@ public class ListViewActivity extends AppCompatActivity implements ListViewHolde
                 totalItemCount = mLayoutManager.getItemCount();
                 firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
 
-                Log.d("testt", String.valueOf(dx) + " " + String.valueOf(dy) + " visibleItemCount" + String.valueOf(visibleItemCount)
-          + " totalItemCount " + String.valueOf(totalItemCount) + " firstVisibleItem " + String.valueOf(firstVisibleItem));
+//                Log.d("testt", String.valueOf(dx) + " " + String.valueOf(dy) + " visibleItemCount" + String.valueOf(visibleItemCount)
+//          + " totalItemCount " + String.valueOf(totalItemCount) + " firstVisibleItem " + String.valueOf(firstVisibleItem));
 
                 if (loading) {
                     if (totalItemCount > previousTotal) {
@@ -79,6 +79,10 @@ public class ListViewActivity extends AppCompatActivity implements ListViewHolde
 
                     loading = true;
                 }
+            }
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState){
+                //SCROLL_STATE_IDLE - 0, SCROLL_STATE_DRAGGING - 1 or SCROLL_STATE_SETTLING - 2.
+                Log.d("testt", "scroll state" + String.valueOf(newState));
             }
         });
 

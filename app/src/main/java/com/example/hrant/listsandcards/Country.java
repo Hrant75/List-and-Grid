@@ -38,4 +38,8 @@ public class Country {
     public boolean isChecked() {
         return checked;
     }
+
+    public void setChecked(boolean check) {
+        this.checked = check;
+    }
 }

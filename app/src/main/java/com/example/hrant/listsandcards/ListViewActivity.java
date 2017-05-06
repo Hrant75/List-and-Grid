@@ -6,17 +6,20 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ListView;
+import android.util.Log;
 
 import java.util.ArrayList;
 
-public class ListViewActivity extends AppCompatActivity {
+public class ListViewActivity extends AppCompatActivity implements ListViewHolder.ListItemClickListener{
     Countries countries;
     ArrayList<Country> countryList;
     private RecyclerView recyclerView;
     private ListAdapter adapter;
 
-
+    // scroll -------------------------------------
+    LinearLayoutManager mLayoutManager;
+    boolean loading = true;
+    int pastVisiblesItems, visibleItemCount, totalItemCount, firstVisibleItem, previousTotal, visibleThreshold;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +33,64 @@ public class ListViewActivity extends AppCompatActivity {
 
         if(type.equals("list")) {
             recyclerView = (RecyclerView) findViewById(R.id.simpleListView);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+            mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            recyclerView.setLayoutManager(mLayoutManager);
         } else {
             recyclerView = (RecyclerView) findViewById(R.id.simpleListView);
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+            mLayoutManager = new GridLayoutManager(this, 3);
+            recyclerView.setLayoutManager(mLayoutManager);
         }
 
-        adapter = new ListAdapter(countryList, type);
+        adapter = new ListAdapter(countryList, this, type);
 
         recyclerView.setAdapter(adapter);
 
+        // scroll -------------------------------------
+        loading = true;
+        previousTotal = 0;
+        visibleThreshold = 5;
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                super.onScrolled(recyclerView, dx, dy);
+
+                visibleItemCount = recyclerView.getChildCount();
+                totalItemCount = mLayoutManager.getItemCount();
+                firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+
+                Log.d("testt", String.valueOf(dx) + " " + String.valueOf(dy) + " visibleItemCount" + String.valueOf(visibleItemCount)
+          + " totalItemCount " + String.valueOf(totalItemCount) + " firstVisibleItem " + String.valueOf(firstVisibleItem));
+
+                if (loading) {
+                    if (totalItemCount > previousTotal) {
+                        loading = false;
+                        previousTotal = totalItemCount;
+                        Log.d("testt", "loading");
+                    }
+                }
+                if (!loading && (totalItemCount - visibleItemCount)
+                        <= (firstVisibleItem + visibleThreshold)) {
+                    // End has been reached
+
+                    Log.d("testt", "end called");
+
+                    loading = true;
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public void onListItemClicked(Country country) {
+        Log.d("testt", "onListItemClick " + country.getIso());
+    }
+
+    @Override
+    public void onGridItemClicked(Country country) {
+        Log.d("testt", "onGridItemClick " + country.getIso());
     }
 }

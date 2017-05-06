@@ -18,9 +18,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
     private String type;
     View view;
 
-    public ListAdapter(ArrayList<Country> data, String type) {
+    private ListViewHolder.ListItemClickListener clickListener;
+
+    public ListAdapter(ArrayList<Country> data,  ListViewHolder.ListItemClickListener clickListener, String type) {
         this.type = type;
         this.data = data;
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
             view = inflater.inflate(R.layout.activity_simple_list, parent, false);
         else
             view = inflater.inflate(R.layout.grid_simple_list, parent, false);
-        return new ListViewHolder(view, type);
+        return new ListViewHolder(view, clickListener, type);
     }
 
     @Override
@@ -42,5 +45,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
     public int getItemCount() {
         return data.size();
     }
+
 
 }

@@ -31,15 +31,13 @@ public class ListViewActivity extends AppCompatActivity implements ListViewHolde
         countries = new Countries(this);
         countryList = countries.getcountries();
 
+        recyclerView = (RecyclerView) findViewById(R.id.simpleListView);
         if(type.equals("list")) {
-            recyclerView = (RecyclerView) findViewById(R.id.simpleListView);
             mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-            recyclerView.setLayoutManager(mLayoutManager);
         } else {
-            recyclerView = (RecyclerView) findViewById(R.id.simpleListView);
             mLayoutManager = new GridLayoutManager(this, 3);
-            recyclerView.setLayoutManager(mLayoutManager);
         }
+        recyclerView.setLayoutManager(mLayoutManager);
 
         adapter = new ListAdapter(countryList, this, type);
 

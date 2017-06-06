@@ -1,6 +1,7 @@
 package com.example.hrant.listsandcards;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -65,6 +66,7 @@ public class ListViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         }
     }
 
+
     private void notifyListItemClicked(){
         if(itemClickListener != null){
             itemClickListener.onListItemClicked(country);
@@ -84,6 +86,7 @@ public class ListViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     }
 
 
+
     public interface ListItemClickListener{
         void onListItemClicked(Country country);
         void onGridItemClicked(Country country);
@@ -94,4 +97,4 @@ public class ListViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 //        } else {
 //            arrowView.setVisibility(View.GONE);
 //        }
-    }
+}
